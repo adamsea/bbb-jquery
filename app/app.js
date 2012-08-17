@@ -33,15 +33,15 @@ function($, _, Backbone, Handlebars) {
     manage: true,
 
     paths: {
-      layout: "app/templates/layouts/",
-      template: "app/templates/"
+      layout: "templates/layouts/",
+      template: "templates/"
     },
 
     fetch: function(path) {
       var done = this.async();
 
       if (!JST[path]) {
-        $.ajax({url: path + '.html'}).then(function(contents) {
+        require(["text!" + path + ".html"], function(contents) {
           JST[path] = Handlebars.compile(contents);
           done(JST[path]);
         });
